@@ -1,7 +1,7 @@
 {
-  "name": "Surveys App Backend",
+  "name": "surveys-app-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
