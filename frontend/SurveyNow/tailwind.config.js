@@ -9,8 +9,13 @@ export default {
       colors:{
         primary: "#84CC16",
         secondary: "#06b6d4"
+      },
+      backgroundImage : {
+        'auth-bg-img':"url('./src/assets/images/right_image.png')"
       }
+
     },
+
   },
   plugins: [],
 }

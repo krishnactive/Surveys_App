@@ -2,3 +2,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base{
+    html{
+        font-family: "poppins", "sans-serif";
+    }
+    body{
+        background-color: #fff;
+        overflow: hidden;
+    }
+}
+
+@layer components{
+    .input-box{
+        @apply w-full flex justify-between gap-3 text-sm text-black bg-slate-100 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none 
+    }
+    .btn-primary{
+        @apply w-full text-sm font-medium text-white bg-primary shadow-primary/5 p-[10px] rounded-md my-1 hover:bg-primary/15 hover:text-primary;
+    }
+}
