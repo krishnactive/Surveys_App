@@ -10,7 +10,6 @@ const generateToken = (id)=>{
 //Register user
 exports.registerUser = async(req, res)=>{
     const {fullName,username, email, password, profileImageUrl} = req.body;
-    
     //validation: check for missing fields
     if(!fullName||!username||!email||!password){
         return res.status(400).json({message: "All fields are required"});
@@ -94,4 +93,24 @@ exports.loginUser = async(req, res)=>{
     }
 }
 
-exports.getUserInfo = async(req, res)=>{}
+exports.getUserInfo = async(req, res)=>{
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+        //Add the new attributes to response
+        const userInfo = {
+            ...user.toObject(),
+            totalPollsCreated:0,
+            totalPollsVotes:0,
+            totalPollsBookmarked:0,
+        };
+        res.status(200).json(userInfo);
+    } catch (err) {
+        res
+            .status(500)
+            .json({message: "Error registering user", error: err.message});
+
+    }
+}
