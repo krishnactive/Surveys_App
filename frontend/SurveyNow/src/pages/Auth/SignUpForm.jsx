@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import AuthLayout from "../../components/layout/AuthLayout"
 import { useNavigate, Link } from 'react-router-dom';
 import ProfilePhotoSelector from '../../components/input/ProfilePhotoSelector';
 import AuthInput from "../../components/input/AuthInput"
 import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import uploadImage from '../../utils/uploadimage';
+import { UserContext } from '../../context/UserContext';
 
 const SignUpForm = () => {
 
@@ -13,6 +17,8 @@ const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { updateUser } = useContext(UserContext);
+
   const [error, setError] = useState(null);
 
   const navigate = useNavigate(null);
@@ -21,6 +27,7 @@ const SignUpForm = () => {
   const handleSignUp = async(e)=>{
     // Handle SignUp form submit
         e.preventDefault();
+        let profileImageUrl = "";
         //defining validateEmail(email) function in other file utils
 
         if(!fullName){
@@ -46,8 +53,34 @@ const SignUpForm = () => {
     //Login API
     try {
       
-    } catch (error) {
+      if(profilePic){
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        fullName,
+        username,
+        email,
+        password,
+        profileImageUrl,
+      });
+      const { token, user } = response.data;
+      if (token) {
+        // console.log({token, user});
+        localStorage.setItem("token", token);
+        updateUser(user);
+        navigate("/dashboard");
+      }
       
+    } catch (error) {
+
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong, try after sometime.");
+      }
+
     }
 
   }

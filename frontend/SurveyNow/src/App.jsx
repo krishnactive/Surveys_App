@@ -13,10 +13,12 @@ import CreatePoll from "./pages/Dashboard/CreatePoll";
 import MyPolls from "./pages/Dashboard/MyPolls";
 import VotedPolls from "./pages/Dashboard/VotedPolls";
 import Bookmarks from "./pages/Dashboard/Bookmarks";
+import UserProvider from './context/UserContext';
 
 const App = () => {
   return (
     <div>
+      <UserProvider>
       <Router>
         <Routes>
           <Route path='/' element={<Root/>}/>
@@ -29,6 +31,7 @@ const App = () => {
           <Route path="/bookmarked-polls" exact element={<Bookmarks/>}/>
         </Routes>
       </Router>
+      </UserProvider>
     </div>
   )
 }
