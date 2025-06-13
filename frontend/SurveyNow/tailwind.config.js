@@ -11,7 +11,8 @@ export default {
         secondary: "#06b6d4"
       },
       backgroundImage : {
-        'auth-bg-img':"url('./src/assets/images/right_image.png')"
+        'auth-bg-img':"url('./src/assets/images/right_image.png')",
+        'profile-bg--img': "url('./src/assets/images/profile-bg.png')",
       }
 
     },

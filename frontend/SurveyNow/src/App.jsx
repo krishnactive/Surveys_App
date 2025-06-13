@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/login" exact element={<LoginForm/>}/>
           <Route path="/signUp" exact element={<SignUpForm/>}/>
           <Route path="/dashboard" exact element={<Home/>}/>
-          <Route path="/create-poll" exact element={<CreatePoll/>}/>
+          <Route path="/create-polls" exact element={<CreatePoll/>}/>
           <Route path="/my-polls" exact element={<MyPolls/>}/>
           <Route path="/voted-polls" exact element={<VotedPolls/>}/>
           <Route path="/bookmarked-polls" exact element={<Bookmarks/>}/>
