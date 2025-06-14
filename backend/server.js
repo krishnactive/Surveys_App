@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
+const pollRoutes = require("./routes/pollRoutes");
 const connectDB = require("./config/db")
 const path = require("path");
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 connectDB();
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/poll", pollRoutes);
 
 //serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads") ));
