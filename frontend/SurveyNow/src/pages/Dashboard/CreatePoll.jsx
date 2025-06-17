@@ -5,6 +5,10 @@ import { UserContext } from '../../context/UserContext';
 import { POLL_TYPE } from '../../utils/data';
 import OptionInput from '../../components/input/OptionInput';
 import OptionImageSelector from '../../components/input/OptionImageSelector'
+import uploadImage from '../../utils/uploadImage';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { Toaster, toast } from 'react-hot-toast';
 
 const CreatePoll = () => {
 
@@ -26,7 +30,46 @@ const CreatePoll = () => {
       ...prev,
       [key]: value,
     }))
+  };
+
+  //clear data
+  const clearData = () => {
+    setPollData({
+      question: "",
+      type: "",
+      options: [],
+      imageOptions: [],
+      error: "",
+    });
+  };
+
+
+  //upload images and get Image url
+  const updateImageAndGetLink = async(imageOptions)=>{
+    const optionPromises = imageOptions.map(async (imageOption) => {
+      try {
+        const imgUploadRes = await uploadImage(imageOption.file);
+        return imgUploadRes.imageUrl || "";
+      } catch (error) {
+        TransformStream.error(`Error uploading image: ${imageOption.file.name}`);
+        return ""
+      }
+    });
+    const optionArr = await Promise.all(optionPromises);
+    return optionArr;
+  } 
+
+
+  const getOptions = async ()=>{
+    switch(pollData.type){
+      case "single-choice":
+        return pollData.options;
+      case "image-based":
+        const options = await updateImageAndGetLink(pollData.imageOptions);
+        return options;
+    }
   }
+
 
   // Create a new poll
   const handleCreatePoll = async () => {
@@ -49,10 +92,32 @@ const CreatePoll = () => {
       handleValueChange("error", "Add atleast 2 images");
       return;
     }
-    // handleValueChange("error", "")
-    // console.log("no err", { pollData })
-  }
+    handleValueChange("error", "")
+    console.log("no err", { pollData })
 
+    const optionData = await getOptions();
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.POLLS.CREATE, {
+        question,
+        type,
+        options: optionData,
+        creatorId: user._id,
+      });
+      if(response){
+        toast.success("Poll Created successfully");
+        clearData();
+      }
+    } catch (error) {
+      if(error.response && error.response.data.message){
+        toast.error(error.response.data.message);
+        handleValueChange("error", error.response.data.message);
+      }else{
+        handleValueChange("error", "Something went wrong. Please try again.");
+      }
+    }
+
+  };
 
   return (
     <DashboardLayout activeMenu='Create Poll'>
