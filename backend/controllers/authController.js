@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
+const Poll = require("../models/Poll");
 
 //generate JWT token
 const generateToken = (id)=>{
@@ -74,15 +75,26 @@ exports.loginUser = async(req, res)=>{
         if(!user || !(await user.comparePassword(password))){
             return res.status(400).json({message: "Invalid credentials"})
         }  
+        //count polls created by the user
+        const totalPollsCreated = await Poll.countDocuments({creator: user._id});
+
+        //count polls the user has voted in
+        const totalPollsVotes = await Poll.countDocuments({
+            voters: user._id,
+        })
+
+        // get the count of booked marked polls
+        const totalPollsBookmarked = user.bookmarkedPolls.length;
+
         res
             .status(200)
             .json({
                 id: user._id,
                 user:{
                     ...user.toObject(),
-                    totalPollsCreated: 0,
-                    totalPollsVotes: 0, 
-                    totalPollsBookmarked: 0,
+                    totalPollsCreated,
+                    totalPollsVotes, 
+                    totalPollsBookmarked,
                 },
                 token: generateToken(user._id),
             });      
@@ -100,11 +112,22 @@ exports.getUserInfo = async(req, res)=>{
             return res.status(404).json({message: "User not found"});
         }
         //Add the new attributes to response
+        //count polls created by the user
+        const totalPollsCreated = await Poll.countDocuments({creator: user._id});
+
+        //count polls the user has voted in
+        const totalPollsVotes = await Poll.countDocuments({
+            voters: user._id,
+        })
+
+        // get the count of booked marked polls
+        const totalPollsBookmarked = user.bookmarkedPolls.length;
+
         const userInfo = {
             ...user.toObject(),
-            totalPollsCreated:0,
-            totalPollsVotes:0,
-            totalPollsBookmarked:0,
+            totalPollsCreated,
+            totalPollsVotes,
+            totalPollsBookmarked,
         };
         res.status(200).json(userInfo);
     } catch (err) {
