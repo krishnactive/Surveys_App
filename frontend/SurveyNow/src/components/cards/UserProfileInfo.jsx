@@ -23,12 +23,14 @@ const UserProfileInfo = ({ imgUrl, fullName = "", username = "", createdAt }) =>
           {fullName}
           {createdAt && (
             <>
-            <div className="flex gap-0.50px">
-            <BsDot className="text-gray-400 text-lg" />
-            <span className="text-[11px] text-gray-500 font-normal">
-               {moment(createdAt).fromNow()}
-            </span>
+            <div className="flex items-center  text-[10px] sm:text-xs text-gray-500 whitespace-nowrap">
+              <BsDot className="text-gray-400 text-sm sm:text-base" />
+              <span className="font-normal">
+                {moment(createdAt).fromNow()}
+              </span>
             </div>
+
+
             </>
             
           )}
