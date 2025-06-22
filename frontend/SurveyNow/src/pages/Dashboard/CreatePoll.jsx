@@ -14,7 +14,7 @@ const CreatePoll = () => {
 
   useUserAuth();
 
-  const { user } = useContext(UserContext);
+  const { user, onPollCreateOrDelete } = useContext(UserContext);
 
   const [pollData, setPollData] = useState({
     question: "",
@@ -106,6 +106,7 @@ const CreatePoll = () => {
       });
       if(response){
         toast.success("Poll Created successfully");
+        onPollCreateOrDelete();
         clearData();
       }
     } catch (error) {
