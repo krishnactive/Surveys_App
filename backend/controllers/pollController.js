@@ -367,13 +367,22 @@ exports.getBookmarkedPolls = async (req, res) => {
 //   });
 // console.log("User Bookmarked Polls (Raw):", user.bookmarkedPolls);
   try {
-    const user = await User.findById(userId).populate({
+    const user = await User.findById(userId)
+    .populate({
         path: "bookmarkedPolls",
         populate: {
           path: "creator",
           select: "fullName username profileImageUrl",
         },
+      })
+      .populate({
+        path: "bookmarkedPolls",
+        populate: {
+          path: "responses.voterId",
+          select: "fullName username profileImageUrl",
+        },
       });
+
       // .populate({
       //   path: "bookmarkedPolls",
       //   populate: {

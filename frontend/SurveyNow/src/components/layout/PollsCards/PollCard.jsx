@@ -22,9 +22,10 @@ const PollCard = ({
   userHasVoted,
   isPollClosed,
   createdAt,
+  // isMyPoll,
 }) => {
 
-    const {user, onUserVoted, toggleBookmarkId} = useContext(UserContext);
+    const {user, onUserVoted, toggleBookmarkId, onPollCreateOrDelete} = useContext(UserContext);
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [rating, setRating] = useState(0);
@@ -130,6 +131,36 @@ const handleVoteSubmit = async()=>{
     }
   };
 
+  //closing poll logic
+  const closePoll = async () => {
+    try {
+      const response = await axiosInstance.post(API_PATHS.POLLS.CLOSE(pollId));
+      if(response.data){
+        setPollClosed(true);
+        toast.success(response.data?.message || "Survey closed SuccessFully!")
+      }
+    } catch (error) {
+        toast.error("something went wrong, Please try again.")
+        console.log("Something went wrong, Please try after some time", error);
+    }
+  }
+
+
+//delete poll logic
+    const deletePoll = async () => {
+    try {
+      const response = await axiosInstance.delete(API_PATHS.POLLS.DELETE(pollId));
+      if(response.data){
+        setPollDeleted(true);
+        onPollCreateOrDelete();
+        toast.success(response.data?.message || "Survey deleted SuccessFully!")
+      }
+    } catch (error) {
+        toast.error("something went wrong, Please try again.")
+        console.log("Something went wrong, Please try after some time", error);
+    }
+  }
+
 
 
   return (
@@ -152,8 +183,8 @@ const handleVoteSubmit = async()=>{
                 toggleBookmark = {toggleBookmark}
                 isMyPoll = {isMyPoll}
                 pollClosed = {pollClosed}
-                onClosePoll={()=>{}}
-                onDelete={()=>{}}
+                onClosePoll={closePoll}
+                onDelete={deletePoll}
             />
            
         </div>
