@@ -1,9 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import { getPollBookmarked } from '../../../utils/helper';
 import UserProfileInfo from "../../cards/UserProfileInfo";
 import PollActions from './PollActions';
 import PollContent from './PollContent';
+import {API_PATHS} from "../../../utils/apiPaths"
+import { toast } from 'react-hot-toast';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const PollCard = ({
   pollId,
@@ -20,7 +23,7 @@ const PollCard = ({
   createdAt,
 }) => {
 
-    const {user} = useContext(UserContext);
+    const {user, onUserVoted} = useContext(UserContext);
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [rating, setRating] = useState(0);
@@ -51,6 +54,63 @@ const handleInput = (value)=>{
     else setSelectedOptionIndex(value);
 }
 
+//generating post data based on the survey type
+const getPostData = useCallback(() => {
+  const voterId = user._id;
+
+  switch (type) {
+    case "open-ended":
+      return { responseText: userResponse, voterId };
+
+    case "rating":
+      return { optionIndex: rating - 1, voterId };
+
+    default:
+      return { optionIndex: selectedOptionIndex, voterId };
+  }
+}, [type, userResponse, rating, selectedOptionIndex, user]);
+
+
+//getting survey details by ID
+const getPollDetails = async () => {
+  try {
+    const { data } = await axiosInstance.get(API_PATHS.POLLS.GET_BY_ID(pollId));
+
+    if (data) {
+      const { options = [], voters = [], responses = [] } = data;
+
+      setPollResult({
+        options,
+        voters: voters.length,
+        responses,
+      });
+    }
+  } catch (error) {
+    console.error(
+      error?.response?.data?.message || "An error occurred while fetching the poll details."
+    );
+  }
+};
+
+
+//handling the submission of surveys
+const handleVoteSubmit = async()=>{
+    try {
+        const response = await axiosInstance.post(
+            API_PATHS.POLLS.VOTE(pollId),
+            getPostData()
+        );
+
+        getPollDetails();
+        setIsVoteComplete(true);
+        onUserVoted();
+        toast.success("voted")
+        
+    } catch (error) {
+        console.error(error.response?.data?.message || "Error while submitting your vote")    
+    }
+}
+
 
   return (
      !pollDeleted && <div className='bg-slate-100/50 my-5 p-5 rounded-lg border-slate-100 mx-auto'>
@@ -67,7 +127,7 @@ const handleInput = (value)=>{
                 inputCaptured = {
                     !!(userResponse || selectedOptionIndex >= 0 || rating)
                 }
-                onVoteSubmit = {() => {}}
+                onVoteSubmit = {handleVoteSubmit}
                 isBookedmarked = {PollBookmarked}
                 toggleBookmark = {() => {}}
                 isMyPoll = {isMyPoll}
@@ -82,7 +142,12 @@ const handleInput = (value)=>{
       <div className='ml-14 mt-3'>
         <p className='text-[15px] text-black leading-8'> {question} </p>
         <div className='mt-4'>
-            <PollContent
+            {isVoteComplete||isPollClosed?(
+                <>
+                    show result
+                </>
+            ):(
+                <PollContent
                 type={type}
                 options={options}
                 selectedOptionIndex={selectedOptionIndex}
@@ -92,6 +157,8 @@ const handleInput = (value)=>{
                 userResponse={userResponse}
                 onResponseChange={handleInput}
             />
+            )}
+            
         </div>
       </div>
     </div>
