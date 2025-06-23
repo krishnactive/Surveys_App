@@ -25,7 +25,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
                         username = {user && user.username}
                         totalPollsVotes = {user && user.totalPollsVotes}
                         totalPollsCreated = {user && user.totalPollsCreated}
-                        totalPollsBookedmarked = {user && user.totalPollsBookedmarked}
+                        totalPollsBookmarked = {user && user.totalPollsBookmarked}
                     />
 
                 </div>

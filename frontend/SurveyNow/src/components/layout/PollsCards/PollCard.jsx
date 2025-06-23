@@ -23,7 +23,7 @@ const PollCard = ({
   createdAt,
 }) => {
 
-    const {user, onUserVoted} = useContext(UserContext);
+    const {user, onUserVoted, toggleBookmarkId} = useContext(UserContext);
 
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
     const [rating, setRating] = useState(0);
@@ -112,6 +112,25 @@ const handleVoteSubmit = async()=>{
 }
 
 
+// Server + local toggle for poll bookmark
+  const toggleBookmark = async () => {
+    try {
+      const response = await axiosInstance.post(
+        API_PATHS.POLLS.BOOKMARK(pollId)
+      );
+
+      toggleBookmarkId(pollId);
+      setPollBookmarked((prev) => !prev);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error(
+        error.response?.data?.message || "Error bookmarking the Poll"
+      );
+    }
+  };
+
+
+
   return (
      !pollDeleted && <div className='bg-slate-100/50 my-5 p-5 rounded-lg border-slate-100 mx-auto'>
         <div className='flex items-start justify-between gap-3 '>
@@ -128,8 +147,8 @@ const handleVoteSubmit = async()=>{
                     !!(userResponse || selectedOptionIndex >= 0 || rating)
                 }
                 onVoteSubmit = {handleVoteSubmit}
-                isBookedmarked = {PollBookmarked}
-                toggleBookmark = {() => {}}
+                isBookmarked = {PollBookmarked}
+                toggleBookmark = {toggleBookmark}
                 isMyPoll = {isMyPoll}
                 pollClosed = {pollClosed}
                 onClosePoll={()=>{}}

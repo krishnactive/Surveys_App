@@ -25,9 +25,10 @@
         @apply text-xs font-medium text-green-700 bg-green-100 px-4 py-1 rounded-lg border border-green-50 cursor-pointer hover:border-primary
     }
     .btn-small {
-        @apply flex items-center gap-1 text-xs font-medium bg-primary text-white hover:bg-green-200/60 hover:text-primary rounded px-3 py-[4px]
+        @apply flex items-center gap-1 text-xs font-medium bg-primary text-white hover:bg-green-200/60 hover:text-primary rounded px-3 py-[4px] 
     }
+
     .icon-btn {
-        @apply text-[20px] text-slate-300 cursor-pointer hover:text-blue-500;
+        @apply text-[20px] text-slate-300 cursor-pointer hover:text-green-500
     }
 }

@@ -16,7 +16,7 @@ const UserDetailsCard = ({
   username ,
   totalPollsVotes ,
   totalPollsCreated ,
-  totalPollsBookedmarked ,
+  totalPollsBookmarked ,
 }) => {
   return (
     <div className='bg-slate-100/50 rounded-lg mt-16 overflow-hidden'>
@@ -49,7 +49,7 @@ const UserDetailsCard = ({
         <div className='flex items-center justify-center gap-5 flex-wrap my-6'>
             <StatsInfo label="Polls Created" value={totalPollsCreated || 0} />
             <StatsInfo label="Polls Votes" value={totalPollsVotes || 0} />
-            <StatsInfo label="Polls Bookedmarked" value={totalPollsBookedmarked || 0} />
+            <StatsInfo label="Polls Bookedmarked" value={totalPollsBookmarked || 0} />
         </div>
       </div>
     </div>
