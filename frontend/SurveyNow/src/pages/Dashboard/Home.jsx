@@ -7,8 +7,9 @@ import HeaderWithFilter from '../../components/layout/HeaderWithFilter';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import PollCard from '../../components/layout/PollsCards/PollCard';
+import InfiniteScroll from "react-infinite-scroll-component"
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 
 const Home = () => {
@@ -24,6 +25,9 @@ const Home = () => {
 
   const [filterType, setFilterType] = useState("");
 
+  const loadMorePolls =()=>{
+    setPage((prevPage)=> prevPage+1);
+  }
 
   const fetchAllPolls = async(overridePage = page) => {
     if(loading) return;
@@ -79,6 +83,16 @@ const Home = () => {
             filterType={filterType}
             setFilterType={setFilterType}
           />
+
+{/* //infinite scroll feature enabled */}
+
+<InfiniteScroll
+  dataLength = {allPolls.length}
+  next={loadMorePolls}
+  hasMore={hasMore}
+  loader={<h4 className='info-text'>Loading...</h4>}
+  endMessage={<p className='info-text'>No more survey to display.</p>}
+>
           {
             allPolls.map((poll) => (
               <PollCard
@@ -98,6 +112,7 @@ const Home = () => {
               />
             ))
           }
+          </InfiniteScroll>
         </div>
       </DashboardLayout>
       
