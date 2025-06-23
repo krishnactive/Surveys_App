@@ -13,7 +13,7 @@ const UserProfileInfo = ({ imgUrl, fullName = "", username = "", createdAt }) =>
         />
       ) : (
         <CharAvatar
-          fullname={fullName}
+          fullName={fullName}
           className="text-sm bg-gradient-to-br from-indigo-200 to-purple-200 shadow-inner"
         />
       )}

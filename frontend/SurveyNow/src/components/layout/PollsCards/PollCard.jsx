@@ -7,6 +7,7 @@ import PollContent from './PollContent';
 import {API_PATHS} from "../../../utils/apiPaths"
 import { toast } from 'react-hot-toast';
 import axiosInstance from '../../../utils/axiosInstance';
+import SurveyResultContent from './SurveyResultContent';
 
 const PollCard = ({
   pollId,
@@ -162,9 +163,15 @@ const handleVoteSubmit = async()=>{
         <p className='text-[15px] text-black leading-8'> {question} </p>
         <div className='mt-4'>
             {isVoteComplete||isPollClosed?(
-                <>
-                    show result
-                </>
+                // <>
+                //     show result
+                // </>
+                <SurveyResultContent
+                  type={type}
+                  options={pollResult.options || []}
+                  voters={pollResult.voters}
+                  responses={pollResult.responses||[]}
+                />
             ):(
                 <PollContent
                 type={type}
