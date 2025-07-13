@@ -22,6 +22,7 @@ const VotedPolls = () => {
   // const loadMorePolls = () => {
   //   setPage((prevPage) => prevPage + 1);
   // };
+  
 
   const fetchAllPolls = async () => {
     if (loading) return;
