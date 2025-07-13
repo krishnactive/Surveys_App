@@ -61,7 +61,7 @@ const MyPolls = () => {
   useEffect(() => {
     setPage(1);
     fetchAllPolls(1);
-  }, [filterType]);
+  }, [filterType,user]);
 
   useEffect(() => {
     if (page !== 1) {

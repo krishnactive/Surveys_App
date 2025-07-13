@@ -41,25 +41,27 @@ const UserProvider = ({children}) => {
 
 
     //adding or removing poll id from bookmarkedPolls
-    const toggleBookmarkId = (id)=>{
-        const bookmarks = user.bookmarkedPolls || [];
-        const index = bookmarks.indexOf(id);
+    const toggleBookmarkId = (id) => {
+  setUser((prev) => {
+    const bookmarks = prev.bookmarkedPolls || [];
+    const index = bookmarks.indexOf(id);
 
-        if(index === -1){
-            setUser((prev)=>({
-                ...prev,
-                bookmarkedPolls: [...bookmarks, id],
-                totalPollsBookmarked: prev.totalPollsBookmarked+1,
-            }));
-        }else{
-            //Remove the ID if it's already in the array
-            setUser((prev) => ({
-                ...prev,
-                bookmarkedPolls: bookmarks.filter((item) => item !== id),
-                totalPollsBookmarked: prev.totalPollsBookmarked - 1,
-            }));
-        }
-    };
+    if (index === -1) {
+      return {
+        ...prev,
+        bookmarkedPolls: [...bookmarks, id],
+        totalPollsBookmarked: prev.totalPollsBookmarked + 1,
+      };
+    } else {
+      return {
+        ...prev,
+        bookmarkedPolls: bookmarks.filter((item) => item !== id),
+        totalPollsBookmarked: prev.totalPollsBookmarked - 1,
+      };
+    }
+  });
+};
+
 
 
 

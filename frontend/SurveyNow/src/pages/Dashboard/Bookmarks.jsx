@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import useUserAuth from '../../hooks/useUserAuth';
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +6,10 @@ import HeaderWithFilter from '../../components/layout/HeaderWithFilter';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import PollCard from '../../components/layout/PollsCards/PollCard';
-import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 import EmptyCard from '../../components/cards/EmptyCard';
-import { FiPlusCircle } from 'react-icons/fi';
+import { BsBookmark } from "react-icons/bs"
+import { UserContext } from '../../context/UserContext';
 
 
 const Bookmarks = () => {
@@ -17,6 +18,7 @@ const Bookmarks = () => {
 
   const [bookmarkedPolls, setBookmarkedPolls] = useState([]);
   const [loading, setLoading] = useState(false);
+  const {user } = useContext(UserContext)
 
   // const loadMorePolls = () => {
   //   setPage((prevPage) => prevPage + 1);
@@ -51,14 +53,16 @@ const Bookmarks = () => {
 
           {bookmarkedPolls.length === 0 && !loading && (
             <EmptyCard
-              imgsrc={<FiPlusCircle className="text-primary text-6xl sm:text-7xl" />}
-              message="you have not participated in any survey"
+              imgsrc={<BsBookmark className="text-primary text-6xl sm:text-7xl" />}
+              message="you have not BookMarked any survey"
               btnText="Explore"
               onClick={() => navigate('/dashboard')}
             />
           )}
-              {bookmarkedPolls.map((poll) => (
-                <PollCard
+              {bookmarkedPolls.map((poll) => {
+                if(!user?.bookmarkedPolls?.includes(poll._id)) return null;
+
+                return <PollCard
                   key={`dashboard_${poll._id}`}
                   pollId={poll._id}
                   question={poll.question}
@@ -73,7 +77,7 @@ const Bookmarks = () => {
                   isPollClosed={poll.closed || false}
                   createdAt={poll.createdAt || false}
                 />
-              ))}
+          })}
         </div>
       </DashboardLayout>
     </div>
