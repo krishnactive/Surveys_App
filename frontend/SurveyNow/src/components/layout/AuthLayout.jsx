@@ -8,7 +8,7 @@ const AuthLayout = ({children}) => {
             {children}
         </div>
 
-        <div className=' hidden md:block w-1/2 h-screen bg-green-50 bg-auth-bg-img bg-cover bg-no-repeat bg-center overflow rounded-l-3xl blur-[1.5px]'>
+        <div className=' hidden md:block w-1/2 h-screen bg-green-50 bg-auth-bg-img bg-cover bg-no-repeat bg-center overflow rounded-l-3xl '>
         {/* cards show */}
         </div>
 

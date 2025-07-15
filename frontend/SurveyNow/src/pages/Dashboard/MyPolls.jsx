@@ -11,6 +11,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { UserContext } from '../../context/UserContext';
 import EmptyCard from '../../components/cards/EmptyCard';
 import { FiPlusCircle } from "react-icons/fi";
+import PollDownloadButton from '../../components/input/PollDownloadButton';
 
 const PAGE_SIZE = 5;
 
@@ -94,7 +95,8 @@ const MyPolls = () => {
             endMessage={<p className="info-text">No more surveys to display.</p>}
           >
             {allPolls.map((poll) => (
-              <PollCard
+              <div>
+                  <PollCard
                 key={`dashboard_${poll._id}`}
                 pollId={poll._id}
                 question={poll.question}
@@ -110,6 +112,10 @@ const MyPolls = () => {
                 createdAt={poll.createdAt || false}
                 isMyPoll
               />
+              <PollDownloadButton pollId={poll._id} />
+              </div>
+              
+              
             ))}
           </InfiniteScroll>
         )}
