@@ -11,8 +11,8 @@ export default {
         secondary: "#06b6d4"
       },
       backgroundImage : {
-        'auth-bg-img':"url('./src/assets/images/right_image.png')",
-        'profile-bg--img': "url('./src/assets/images/profile-bg.png')",
+        'auth-bg-img':"url('https://res.cloudinary.com/de3dlsov2/image/upload/v1752578972/uploads/qlhbvxq2s7ecxwhcxdn5.png')",
+        'profile-bg--img': "url('https://res.cloudinary.com/de3dlsov2/image/upload/v1752570337/uploads/ssyqntviegtvuanbctqd.png')",
       }
 
     },

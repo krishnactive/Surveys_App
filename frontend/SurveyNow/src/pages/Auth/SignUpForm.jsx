@@ -21,7 +21,7 @@ const SignUpForm = () => {
 
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate(null);
+  const navigate = useNavigate();
 
   //handle Sign Up form submit
   const handleSignUp = async(e)=>{
