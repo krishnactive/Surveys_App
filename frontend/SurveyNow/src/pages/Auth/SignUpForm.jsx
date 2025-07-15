@@ -6,7 +6,7 @@ import AuthInput from "../../components/input/AuthInput"
 import { validateEmail } from '../../utils/helper';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
-import uploadImage from '../../utils/uploadimage';
+import uploadImage from '../../utils/uploadImage.js';
 import { UserContext } from '../../context/UserContext';
 
 const SignUpForm = () => {
