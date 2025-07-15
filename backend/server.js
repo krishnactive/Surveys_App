@@ -6,6 +6,7 @@ const pollRoutes = require("./routes/pollRoutes");
 const connectDB = require("./config/db")
 const path = require("path");
 const app = express();
+const downloadRoutes = require("./routes/download");
 
 //middleware to handle CORS
 app.use(
@@ -22,6 +23,7 @@ connectDB();
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/poll", pollRoutes);
+app.use("/api/v1/poll", downloadRoutes);
 
 //serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads") ));
