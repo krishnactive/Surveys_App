@@ -5,7 +5,7 @@ import { UserContext } from '../../context/UserContext';
 import { POLL_TYPE } from '../../utils/data';
 import OptionInput from '../../components/input/OptionInput';
 import OptionImageSelector from '../../components/input/OptionImageSelector'
-import uploadImage from '../../utils/uploadImage';
+import uploadImage from '../../utils/uploadImage.js';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { Toaster, toast } from 'react-hot-toast';
@@ -51,7 +51,9 @@ const CreatePoll = () => {
         const imgUploadRes = await uploadImage(imageOption.file);
         return imgUploadRes.imageUrl || "";
       } catch (error) {
-        TransformStream.error(`Error uploading image: ${imageOption.file.name}`);
+        console.error(`Error uploading image: ${imageOption.file.name}`);
+        toast.error(`Error uploading image: ${imageOption.file.name}`);
+
         return ""
       }
     });
