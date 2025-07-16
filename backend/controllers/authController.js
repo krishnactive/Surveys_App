@@ -122,7 +122,7 @@ exports.getUserInfo = async(req, res)=>{
 
         // get the count of booked marked polls
         const totalPollsBookmarked = user.bookmarkedPolls.length;
-
+        // console.log("kjnknadlknfladk",totalPollsBookmarked);
         const userInfo = {
             ...user.toObject(),
             totalPollsCreated,

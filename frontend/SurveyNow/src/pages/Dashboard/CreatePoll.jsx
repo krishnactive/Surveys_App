@@ -108,7 +108,7 @@ const CreatePoll = () => {
       });
       if(response){
         toast.success("Poll Created successfully");
-        onPollCreateOrDelete();
+        onPollCreateOrDelete("create");
         clearData();
       }
     } catch (error) {

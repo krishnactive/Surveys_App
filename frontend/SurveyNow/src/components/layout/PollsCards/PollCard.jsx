@@ -152,7 +152,7 @@ const handleVoteSubmit = async()=>{
       const response = await axiosInstance.delete(API_PATHS.POLLS.DELETE(pollId));
       if(response.data){
         setPollDeleted(true);
-        onPollCreateOrDelete();
+        onPollCreateOrDelete("delete", pollId);
         toast.success(response.data?.message || "Survey deleted SuccessFully!")
       }
     } catch (error) {

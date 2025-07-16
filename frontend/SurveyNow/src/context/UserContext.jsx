@@ -31,13 +31,36 @@ const UserProvider = ({children}) => {
         updateUserStats("totalPollsVotes", totalPollsVotes+1);
     };
 
-    //update totalpollscreated count locally
-    const onPollCreateOrDelete = (type = "create") => {
-        const totalPollsCreated = user.totalPollsCreated || 0;
-        updateUserStats(
-            type == "create" ? totalPollsCreated + 1 : totalPollsCreated - 1
-        );
-    }
+    const onPollCreateOrDelete = (type = "create", deletedPollId = null) => {
+      setUser((prev) => {
+        if (!prev) return prev;
+
+        let totalPollsCreated = prev.totalPollsCreated || 0;
+        let totalPollsBookmarked = prev.totalPollsBookmarked || 0;
+        let updatedBookmarks = prev.bookmarkedPolls || [];
+
+        if (type === "create") {
+          totalPollsCreated += 1;
+        } else if (type === "delete") {
+          totalPollsCreated = Math.max(totalPollsCreated - 1, 0);
+
+          if (deletedPollId) {
+            if (updatedBookmarks.includes(deletedPollId)) {
+              updatedBookmarks = updatedBookmarks.filter(id => id !== deletedPollId);
+              totalPollsBookmarked = updatedBookmarks.length;
+            }
+          }
+        }
+
+        return {
+          ...prev,
+          totalPollsCreated,
+          bookmarkedPolls: updatedBookmarks,
+          totalPollsBookmarked,
+        };
+      });
+    };
+
 
 
     //adding or removing poll id from bookmarkedPolls

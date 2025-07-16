@@ -435,6 +435,12 @@ exports.deletePoll = async (req, res) => {
 
     await Poll.findByIdAndDelete(id);
 
+    await User.updateMany(
+      { bookmarkedPolls: id },
+      { $pull: { bookmarkedPolls: id } }
+    );
+
+
     res.status(200).json({ message: "Poll deleted successfully" });
   } catch (error) {
     res
