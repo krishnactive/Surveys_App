@@ -4,6 +4,7 @@ export const UserContext = createContext();
 const UserProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
+    const [stats, setStats] = useState([]);
 
     //Function to update user data
     const updateUser = (userData) => {
@@ -97,6 +98,8 @@ const UserProvider = ({children}) => {
             onPollCreateOrDelete,
             onUserVoted,
             toggleBookmarkId,
+            stats, 
+            setStats,
         }}
     >
         {children}
