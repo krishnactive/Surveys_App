@@ -43,7 +43,7 @@ const PollCard = ({
         pollId,
         user.bookmarkedPolls||[]
     );
-const isMyPoll = user?.username === creatorUsername;
+const isMyPoll = user?.email === creatorUsername;
 
 const [PollBookmarked, setPollBookmarked] = useState(isPollBookmarked);
 const [pollClosed, setPollClosed] = useState(isPollClosed || false);

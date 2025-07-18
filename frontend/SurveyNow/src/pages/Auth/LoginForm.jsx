@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AuthInput from '../../components/input/AuthInput';
 import { validateEmail } from "../../utils/helper"
 import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+import { API_PATHS, BASE_URL } from '../../utils/apiPaths';
 import { UserContext } from '../../context/UserContext';
 
 const LoginForm = () => {
@@ -80,6 +80,23 @@ const LoginForm = () => {
           <button type="submit" className='btn-primary'>
             LOGIN
           </button>
+
+          <button
+            type="button"
+            onClick={() => window.location.href = `${BASE_URL}${API_PATHS.AUTH.GOOGLE_LOGIN}`}
+            className="btn-google mt-3"
+          >
+            <img 
+              src="https://developers.google.com/identity/images/g-logo.png" 
+              alt="Google logo" 
+              className="inline w-5 h-5 mr-2"
+            />
+            Sign in with Google
+          </button>
+
+
+
+
           <p className='text-[13px] text-slate-800 mt-3'>
             Don't have an account?{""}
             <Link className="font-medium text-primary underline" to="/signup">SignUp</Link>

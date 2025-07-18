@@ -1,6 +1,7 @@
 const express = require("express");
 const cloudinary = require("../config/cloudinary"); 
 const fs = require("fs");
+const passport = require("passport");
 const{
     registerUser,
     loginUser,
@@ -39,5 +40,26 @@ router.post("/upload-image", upload.single("image"), async (req, res) => {
     res.status(500).json({ message: "Error uploading image", error: error.message });
   }
 });
+
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Google redirect callback
+router.get('/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/',    // on failure, redirect here
+    session: false           // we are using JWT not session
+  }),
+  (req, res) => {
+    // Successful authentication
+    // return JWT token or redirect to frontend
+    // redirect to frontend with token in query
+    const token = req.user.token;   // assuming passport sets req.user.token
+    res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
+
+  }
+);
+
 
 module.exports = router;

@@ -100,7 +100,7 @@ const Home = () => {
                   responses={poll.responses || []}
                   creatorProfileImg={poll.creator.profileImageUrl || null}
                   creatorName={poll.creator.fullName}
-                  creatorUsername={poll.creator.username}
+                  creatorUsername={poll.creator.email}
                   userHasVoted={poll.userHasVoted || false}
                   isPollClosed={poll.closed || false}
                   createdAt={poll.createdAt || false}

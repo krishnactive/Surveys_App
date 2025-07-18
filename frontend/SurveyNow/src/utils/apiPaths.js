@@ -8,6 +8,8 @@ export const API_PATHS = {
         REGISTER: "/api/v1/auth/register",
         GET_USER_INFO: "/api/v1/auth/getUser",
         UPDATE_PROFILE: "/api/v1/auth/update",
+        GOOGLE_LOGIN: "/api/v1/auth/google",        
+        GOOGLE_CALLBACK: "/api/v1/auth/google/callback" ,
     },
     POLLS:{
         CREATE: "/api/v1/poll/create",
