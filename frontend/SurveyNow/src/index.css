@@ -34,4 +34,8 @@
     .info-text {
         @apply text-sm text-primary font-medium text-center p-3 bg-gray-100 rounded-lg
     }
+    .btn-google {
+        @apply flex items-center justify-center bg-white text-gray-700 border border-gray-300 rounded px-4 py-2 text-sm font-medium hover:bg-gray-100;
+    }
+
 }

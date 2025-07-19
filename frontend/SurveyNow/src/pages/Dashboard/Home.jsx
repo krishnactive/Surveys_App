@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import useUserAuth from '../../hooks/useUserAuth';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import PollCard from '../../components/layout/PollsCards/PollCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import EmptyCard from '../../components/cards/EmptyCard';
 import { FiPlusCircle } from 'react-icons/fi';
+import { UserContext } from '../../context/UserContext';
 
 const PAGE_SIZE = 5;
 
@@ -17,11 +18,13 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [allPolls, setAllPolls] = useState([]);
-  const [stats, setStats] = useState([]);
+  
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [filterType, setFilterType] = useState('');
+
+  const { stats,setStats } = useContext(UserContext);
 
   const loadMorePolls = () => {
     setPage((prevPage) => prevPage + 1);
@@ -100,7 +103,7 @@ const Home = () => {
                   responses={poll.responses || []}
                   creatorProfileImg={poll.creator.profileImageUrl || null}
                   creatorName={poll.creator.fullName}
-                  creatorUsername={poll.creator.username}
+                  creatorUsername={poll.creator.email}
                   userHasVoted={poll.userHasVoted || false}
                   isPollClosed={poll.closed || false}
                   createdAt={poll.createdAt || false}

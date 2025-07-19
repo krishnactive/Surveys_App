@@ -19,9 +19,9 @@ const UserDetailsCard = ({
   totalPollsBookmarked ,
 }) => {
   return (
-    <div className='bg-slate-100/50 rounded-lg mt-16 overflow-hidden'>
+    <div className='bg-slate-100/50 rounded-lg mt-16 overflow-hidden bg-white'>
       <div className='w-full h-32 bg-profile-bg--img bg-cover flex justify-center bg-green-500 relative'>
-        <div className='absolute -bottom-10 rounded-full overflow-hidden border-2 border-primary' >
+        <div className='absolute -bottom-10 rounded-full overflow-hidden border-2 border-primary ' >
           {profileImageUrl? (
             <img src={profileImageUrl || './src/assets/images/person.png'}
            alt="Profile Image"
@@ -37,7 +37,7 @@ const UserDetailsCard = ({
           
         </div>
       </div>
-      <div className='mt-12 px-5'>
+      <div className='mt-12 px-5 bg-white'>
         <div className='text-center pt-1'>
           <h5 className='text-lg text-gray-950 font-medium leading-6'>
             {fullName}

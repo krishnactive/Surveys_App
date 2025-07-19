@@ -35,7 +35,7 @@ const UserProfileInfo = ({ imgUrl, fullName = "", username = "", createdAt }) =>
             
           )}
         </div>
-        <span className="text-xs p-1 text-gray-500">@{username}</span>
+        <span className="text-xs p-1 text-gray-500">{username}</span>
       </div>
     </div>
   );
