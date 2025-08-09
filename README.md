@@ -1,6 +1,6 @@
-# SurveyNow – Full‑Stack Polling Application
+# SurveysApp – Full‑Stack Survey Application
 
-SurveyNow is a full‑stack web application for creating, sharing, and analyzing polls. It consists of a **Node.js/Express** backend and a **React (Vite)** frontend. Registered users can create polls of various types, vote or submit responses, bookmark interesting polls, and export poll results to CSV or JSON. Authentication uses **JWT** tokens and optional **Google OAuth**; profile images and poll images are stored in **Cloudinary**.
+SurveysApp is a full‑stack web application for creating, sharing, and analyzing polls. It consists of a **Node.js/Express** backend and a **React (Vite)** frontend. Registered users can create polls of various types, vote or submit responses, bookmark interesting polls, and export poll results to CSV or JSON. Authentication uses **JWT** tokens and optional **Google OAuth**; profile images and poll images are stored in **Cloudinary**.
 
 ---
 
